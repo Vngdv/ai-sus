@@ -1,9 +1,11 @@
+using Postgrest.Models;
+
 namespace ImageSus.Data;
 
-public class Image
+public class Image: BaseModel
 {
-    public int Id;
-    public String? Link;
-    public bool IsSus;
+    public int Id {get; set;}
+    public String? Link {get; set;}
+    public bool IsSus {get; set;}
 
 }

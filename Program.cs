@@ -4,10 +4,18 @@ using ImageSus.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true);
+
+var options = new SupabaseConfiguration();
+
+builder.Configuration.GetSection("Supabase").Bind(options);
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddSingleton(options);
+builder.Services.AddSingleton<ImageService>();
 
 var app = builder.Build();
 

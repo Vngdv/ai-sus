@@ -1,4 +1,6 @@
 ﻿@page "/"
+@using ImageSus.Data;
+@inject ImageService ImageService;
 
 <PageTitle>Index</PageTitle>
 
@@ -6,4 +8,25 @@
 
 Welcome to your new app.
 
+@if (images == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @foreach (var image in images)
+    {
+        <img src="@image.Link" width="400" height="400" style="object-fit: cover;"/>
+    }
+}
+
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+@code {
+    private Image[]? images;
+
+    protected override async Task OnInitializedAsync()
+    {
+        images = await ImageService.GetImageAsync();
+    }
+}
