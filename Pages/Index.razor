@@ -2,17 +2,16 @@
 @using ImageSus.Data;
 @inject ImageService ImageService;
 
-<h1 class="">Which image is not real?</h1>
-<div class="images">
-    @foreach (var image in @images)
-    {
-        <ImageFrame Link=@image.Link IsSus=@image.IsSus/>
-    }
-    <button @onclick="Reload">New Set</button>
+<div class="page">
+    <h1 class="center">Which image is not real?</h1>
+    <div class="images center">
+        @foreach (var image in @images)
+        {
+            <ImageFrame Link=@image.Link IsSus=@image.IsSus/>
+        }
+    </div>
+    <button @onclick="Reload" class="button center">New Set</button>
 </div>
-
-
-<SurveyPrompt Title="How is Blazor working for you?" />
 
 @code {
     private Image[]? images = new Image[]{};

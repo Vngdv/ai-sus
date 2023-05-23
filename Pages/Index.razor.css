@@ -1,7 +1,24 @@
 .images {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     grid-column-gap: 4px;
     grid-row-gap: 4px;
+    height: 50vh;
+    aspect-ratio: 1/1;
+    margin: 8rem auto;
+}
+.page {
+    background-color: #232427;
+    color: rgb(249, 249, 249);
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    text-align: center;
+}
+.button {
+    width: 80%;
+}
+.center {
+    margin: 0 auto;
 }
