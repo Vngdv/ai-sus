@@ -2,11 +2,24 @@
 @using ImageSus.Data;
 @inject ImageService ImageService;
 
-<PageTitle>Index</PageTitle>
+<h1 class="">Which image is not real?</h1>
+<div class="images">
+    @foreach (var image in @SussyImageService.LoadedImages)
+    {
+        <ImageFrame Link=@image.Link IsSus=@image.IsSus/>
+    }
+    <button @onclick="Reload">New Set</button>
+</div>
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await SussyImageService.LoadNewImageSet();
+    }
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+    protected void OnImageClick(Image image)
+    {
+        
+    }
 
 @if (images == null)
 {
@@ -28,5 +41,14 @@ else
     protected override async Task OnInitializedAsync()
     {
         images = await ImageService.GetImageAsync();
+    }
+}
+
+    protected async void Reload()
+    {
+        SussyImageService.LoadedImages.Select(s => {Console.WriteLine(s.Id); return 1;});
+        Console.WriteLine("Reload");
+        Console.WriteLine(SussyImageService.LoadedImages.Length);
+        await SussyImageService.LoadNewImageSet().ContinueWith(t => StateHasChanged());
     }
 }
