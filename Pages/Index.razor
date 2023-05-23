@@ -3,14 +3,16 @@
 @inject ImageService ImageService;
 
 <div class="page">
-    <h1 class="center">Which image is not real?</h1>
-    <div class="images center">
-        @foreach (var image in @images)
-        {
-            <ImageFrame Link=@image.Link IsSus=@image.IsSus/>
-        }
+    <div class="container">
+        <h1 class="find-titel">Find the Fake</h1>
+        <div class="find-grid">
+            @foreach (var image in @images)
+            {
+                <img alt="hmm" src="@image.Link">
+            }
+        </div>
+        <button @onclick="Reload" class="button">Refresh</button>
     </div>
-    <button @onclick="Reload" class="button center">New Set</button>
 </div>
 
 @code {
@@ -18,12 +20,20 @@
 
     protected override async Task OnInitializedAsync()
     {
-        images = await ImageService.GetImageAsync();
+        await Reload();
     }
 
-    private void Reload()
+    private async Task Reload()
     {
-        images = ImageService.GetImageAsync().Result;
+        var realImages = await ImageService.GetImageAsync(count: 8, isSus: false);
+        var susImages = await ImageService.GetImageAsync(count: 1, isSus: true);
+        images = realImages.Concat(susImages).ToArray();
+        var rng = new Random();
+        images = realImages
+            .Concat(susImages)
+            .OrderBy(_ => rng.Next())
+            .ToArray();
+
         StateHasChanged();
     }
 }
