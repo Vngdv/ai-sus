@@ -1,0 +1,5 @@
+.image-frame {
+    aspect-ratio: 1/1;
+    max-height: 32rem;
+    object-fit: cover;
+}
