@@ -80,3 +80,7 @@
 .center {
     margin: 0 auto;
 }
+
+.img-hidden {
+    opacity: 0%;
+}
