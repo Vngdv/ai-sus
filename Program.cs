@@ -1,33 +1,22 @@
+using ImageSus;
 using ImageSus.Data;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<App>("#app");
 
-builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true);
+// builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true);
+
+builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
 
 var options = new SupabaseConfiguration();
 
-builder.Configuration.GetSection("Supabase").Bind(options);
+options.Url = "https://iddasjdmhzoxvukzohgu.supabase.co";
+options.Key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkZGFzamRtaHpveHZ1a3pvaGd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODMwMzE1MDYsImV4cCI6MTk5ODYwNzUwNn0.mJO7sxyS-_OY1FhDZrQX15Ea4Re-lWeBWmJCDtJ5tp4";
 
 // Add services to the container.
-builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton(options);
 builder.Services.AddSingleton<ImageService>();
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-}
-
-
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
-
-app.Run();
+await builder.Build().RunAsync();
