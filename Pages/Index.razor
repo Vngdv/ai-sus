@@ -5,11 +5,11 @@
 <div class="page">
     <div class="container">
         <h1 class="find-titel">Find the Fake</h1>
-        <div class="find-grid">
+        <div class="find-grid" >
             @foreach (var image in @images)
             {
                 <div class="image-container">
-                    <img alt="hmm" src="@image.Link" @onclick="@(e => SelectSus(image))" class="@ComputeImageClasses(image)">
+                    <img alt="hmm" @onload="@(() => HandleImageLoad(image))" src="@image.Link" @onclick="@(e => SelectSus(image))" class="@ComputeImageClasses(image)">
                     @if(solved && image.IsSus) {
                         <p class="imposter">ඞ</p>
                     }
@@ -25,6 +25,8 @@
 
 @code {
     private Image[]? images = new Image[]{};
+    private Image[] loadedImages = new Image[]{};
+    private bool allImagesLoaded = false;
 
     private int? selectedId;
 
@@ -37,6 +39,10 @@
 
     private async Task Reload()
     {
+        // Clear loaded images
+        loadedImages = new Image[]{};
+        allImagesLoaded = false;
+
         var realImages = await ImageService.GetImageAsync(count: 8, isSus: false);
         var susImages = await ImageService.GetImageAsync(count: 1, isSus: true);
         images = realImages.Concat(susImages).ToArray();
@@ -52,7 +58,7 @@
 
     private string ComputeImageClasses(Image image)
     {
-        string baseClass = "grid-element ";
+        string baseClass = allImagesLoaded ? "grid-element " : "grid-element img-hidden";
         if(selectedId == image.Id) {
             if(solved) {
               if (image.IsSus) {
@@ -74,5 +80,13 @@
     private void Solve()
     {
         solved = true;
+    }
+
+    private void HandleImageLoad(Image image) {
+        loadedImages = loadedImages.Append(image).ToArray();
+        if (loadedImages.Length == images.Length) {
+            allImagesLoaded = true;
+            StateHasChanged();
+        }
     }
 }

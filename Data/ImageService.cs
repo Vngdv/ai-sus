@@ -7,6 +7,11 @@ public class ImageService
     private Client _client;
     public ImageService(SupabaseConfiguration config)
     {
+        if(config == null || string.IsNullOrEmpty(config.Url) || string.IsNullOrEmpty(config.Key))
+        {
+            throw new ArgumentNullException(nameof(config));
+        }
+
         _client = new Supabase.Client(config.Url, config.Key, new SupabaseOptions
         {
             AutoRefreshToken = true,
