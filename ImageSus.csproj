@@ -1,13 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project  Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <!-- <RunAOTCompilation>true</RunAOTCompilation>
+    <BlazorEnableCompression>false</BlazorEnableCompression> -->
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="supabase-csharp" Version="0.10.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.0" PrivateAssets="all" />
+  
+    <PackageReference Include="supabase-csharp" Version="0.11.0" />
   </ItemGroup>
 
 </Project>
