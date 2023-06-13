@@ -1,6 +1,6 @@
 .page {
     background-color: #232427;
-    
+
     inset: 0;
     position: fixed;
 
@@ -9,7 +9,7 @@
 
 .container {
     text-align: center;
-    
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -45,8 +45,8 @@
     aspect-ratio: 1/1;
 }
 
-.find-grid * {
-    border: 1px solid rgb(249, 249, 249);
+.grid-element {
+    border: 2px solid rgb(249, 249, 249);
     border-radius: 0.25rem;
 
 
@@ -54,9 +54,35 @@
     height: 100%;
     object-fit: cover;
 
-    aspect-ratio: 1/1; 
+    aspect-ratio: 1/1;
 }
 
+.selected {
+    border: 2px solid rgb(255, 255, 0);
+}
+
+.correct {
+    border: 2px solid rgb(94, 255, 0);
+}
+
+.incorrect {
+    border: 2px solid rgb(255, 0, 0);
+}
+
+.image-container {
+    position: relative;
+}
+
+.imposter {
+    position: absolute;
+    font-size: 3rem;
+    color: red;
+    z-index: 1;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    top: 0;
+    margin: 0;
+}
 
 .button {
     background-color: #232427;
@@ -77,6 +103,16 @@
     color: #232427;
 }
 
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem
+}
+
 .center {
     margin: 0 auto;
+}
+
+.selected {
+    filter: contrast(0.4)
 }

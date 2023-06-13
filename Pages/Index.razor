@@ -8,15 +8,27 @@
         <div class="find-grid">
             @foreach (var image in @images)
             {
-                <img alt="hmm" src="@image.Link">
+                <div class="image-container">
+                    <img alt="hmm" src="@image.Link" @onclick="@(e => SelectSus(image))" class="@ComputeImageClasses(image)">
+                    @if(solved && image.IsSus) {
+                        <p class="imposter">ඞ</p>
+                    }
+                </div>
             }
         </div>
-        <button @onclick="Reload" class="button">Refresh</button>
+        <div class="button-container">
+            <button @onclick="Solve" class="button" style="@((selectedId == null || solved) ? "display: none" : "")">Solve</button>
+            <button @onclick="Reload" class="button">Refresh</button>
+        </div>
     </div>
 </div>
 
 @code {
     private Image[]? images = new Image[]{};
+
+    private int? selectedId;
+
+    private bool solved;
 
     protected override async Task OnInitializedAsync()
     {
@@ -35,5 +47,32 @@
             .ToArray();
 
         StateHasChanged();
+        solved = false;
+    }
+
+    private string ComputeImageClasses(Image image)
+    {
+        string baseClass = "grid-element ";
+        if(selectedId == image.Id) {
+            if(solved) {
+              if (image.IsSus) {
+                return baseClass + "correct";
+              }
+              return baseClass + "incorrect";
+            }
+            return baseClass + "selected";
+        }
+        return baseClass;
+    }
+
+    private void SelectSus(Image image)
+    {
+        if (solved) return;
+        selectedId = image.Id;
+    }
+
+    private void Solve()
+    {
+        solved = true;
     }
 }
