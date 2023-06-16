@@ -10,7 +10,7 @@
         <div class="find-grid" >
             @foreach (var image in @images)
             {
-                <div class="image-container">
+                <div class="image-container @(allImagesLoaded ? "" : "hidden")">
                     <img alt="hmm" @onload="@(() => HandleImageLoad(image))" src="@image.Link" @onclick="@(e => SelectSus(image))" class="@ComputeImageClasses(image)">
                     @if(solved && image.IsSus) {
                         <p class="imposter">ඞ</p>
@@ -69,8 +69,8 @@
 
     private string ComputeImageClasses(Image image)
     {
-        string baseClass = allImagesLoaded ? "grid-element " : "grid-element img-hidden";
-        if(selectedId == image.Id) {
+        string baseClass = "grid-element ";
+        if(selectedId == image.Id)  {
             if(solved) {
               if (image.IsSus) {
                 return baseClass + "correct";
