@@ -12,9 +12,8 @@
     flex-direction: column;
     justify-content: center;
 
-    gap: 3rem;
-
     width: 32rem;
+    max-width: calc(100vw - 3rem);
 
     margin: 0 auto;
 }
@@ -30,6 +29,9 @@
     text-justify: inter-word;
 
     letter-spacing: 0.35rem;
+
+    margin-top: 1rem;
+    margin-bottom: 0;
 }
 
 .find-grid {
@@ -43,6 +45,8 @@
     align-items: center;
 
     aspect-ratio: 1/1;
+
+    padding: 1.25rem 0;
 }
 
 .grid-element {
