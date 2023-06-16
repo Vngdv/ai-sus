@@ -1,6 +1,8 @@
 ﻿@page "/"
 @using ImageSus.Data;
 @inject ImageService ImageService;
+@inject HttpClient Http;
+@using System.Net.Http.Json;
 
 <div class="page">
     <div class="container">
@@ -19,13 +21,18 @@
         <div class="button-container">
             <button @onclick="Solve" class="button" style="@((selectedId == null || solved) ? "display: none" : "")">Solve</button>
             <button @onclick="Reload" class="button">Refresh</button>
+            <p class="cat-fact">@catFact</p>
         </div>
     </div>
 </div>
 
 @code {
     private Image[]? images = new Image[]{};
+
+    private string? catFact;
+
     private Image[] loadedImages = new Image[]{};
+
     private bool allImagesLoaded = false;
 
     private int? selectedId;
@@ -42,6 +49,10 @@
         // Clear loaded images
         loadedImages = new Image[]{};
         allImagesLoaded = false;
+
+        //Load CatFact
+        var jsonResult = await Http.GetFromJsonAsync<CatFactResponse>("https://catfact.ninja/fact");
+        catFact = jsonResult.fact;
 
         var realImages = await ImageService.GetImageAsync(count: 8, isSus: false);
         var susImages = await ImageService.GetImageAsync(count: 1, isSus: true);
@@ -82,7 +93,8 @@
         solved = true;
     }
 
-    private void HandleImageLoad(Image image) {
+    private void HandleImageLoad(Image image) 
+    {
         loadedImages = loadedImages.Append(image).ToArray();
         if (loadedImages.Length == images.Length) {
             allImagesLoaded = true;

@@ -124,3 +124,7 @@
 .hidden {
     opacity: 0%;
 }
+
+.cat-fact {
+    color: rgb(249, 249, 249);
+}
