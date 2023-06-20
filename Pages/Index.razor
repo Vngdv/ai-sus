@@ -27,7 +27,7 @@
 </div>
 
 @code {
-    private Image[]? images = new Image[]{};
+    private Image[] images = new Image[]{};
 
     private string? catFact;
 
@@ -52,6 +52,8 @@
 
         //Load CatFact
         var jsonResult = await Http.GetFromJsonAsync<CatFactResponse>("https://catfact.ninja/fact");
+        if(jsonResult == null) 
+            throw new Exception("Could not load cat fact");
         catFact = jsonResult.fact;
 
         var realImages = await ImageService.GetImageAsync(count: 8, isSus: false);
