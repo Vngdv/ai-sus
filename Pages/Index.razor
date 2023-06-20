@@ -7,6 +7,7 @@
 <div class="page">
     <div class="container">
         <h1 class="find-titel">Find the Fake</h1>
+        <h2 class="find-subtitel">Score @score</h2>
         <div class="find-grid" >
             @foreach (var image in @images)
             {
@@ -39,6 +40,8 @@
 
     private bool solved;
 
+    private int score = 0;
+
     protected override async Task OnInitializedAsync()
     {
         await Reload();
@@ -65,8 +68,8 @@
             .OrderBy(_ => rng.Next())
             .ToArray();
 
-        StateHasChanged();
         solved = false;
+        StateHasChanged();
     }
 
     private string ComputeImageClasses(Image image)
@@ -93,6 +96,12 @@
     private void Solve()
     {
         solved = true;
+
+        if(images.First(i => i.Id == selectedId).IsSus) {
+            score++;
+        } else {
+            score = 0;
+        }
     }
 
     private void HandleImageLoad(Image image) 

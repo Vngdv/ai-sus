@@ -35,6 +35,22 @@
     margin-bottom: 0;
 }
 
+.find-subtitel {
+    color: rgb(249, 249, 249);
+
+    font-size: 1.5rem;
+    font-weight: 400;
+
+    text-align: center;
+    text-transform: uppercase;
+    text-justify: inter-word;
+
+    letter-spacing: 0.35rem;
+
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
 .find-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
