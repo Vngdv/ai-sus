@@ -1,6 +1,6 @@
 # AI-sus ඞ
 
 ## Inhalt
-Backlog: // TODO insert link
-Retrospektive: // TODO insert link
+Backlog: [backlog.md](.docs/backlog.md)  
+Retrospektive: [retrospektive.md](.docs/retrospektive.md)
 
