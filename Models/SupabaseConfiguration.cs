@@ -1,4 +1,4 @@
-namespace ImageSus.Data;
+namespace ImageSus.Models;
 public class SupabaseConfiguration 
 {
     public String? Url {get; set;}

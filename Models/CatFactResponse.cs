@@ -1,4 +1,4 @@
-namespace ImageSus.Data;
+namespace ImageSus.Models;
 
 public class CatFactResponse
 {

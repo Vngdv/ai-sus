@@ -1,5 +1,6 @@
 ﻿@page "/"
-@using ImageSus.Data;
+@using ImageSus.Models;
+@using ImageSus.Services;
 @inject ImageService ImageService;
 @inject HttpClient Http;
 @using System.Net.Http.Json;
@@ -8,6 +9,7 @@
     <div class="container">
         <h1 class="find-titel">Find the Fake</h1>
         <h2 class="find-subtitel">Score @score</h2>
+        <p class="find-subtitel">Loading @((loadedImages.Length/9.0*100).ToString("#.##"))%</p>
         <div class="find-grid" >
             @foreach (var image in @images)
             {
@@ -44,9 +46,11 @@
 
     protected override async Task OnInitializedAsync()
     {
+        // Load all of the images on startup
         await Reload();
     }
 
+    // Reloads/Loads the current data
     private async Task Reload()
     {
         // Clear loaded images
@@ -72,6 +76,7 @@
         StateHasChanged();
     }
 
+    // This returns the css class a image should have
     private string ComputeImageClasses(Image image)
     {
         string baseClass = "grid-element ";
@@ -87,12 +92,14 @@
         return baseClass;
     }
 
+    // Sets the selected image
     private void SelectSus(Image image)
     {
         if (solved) return;
         selectedId = image.Id;
     }
 
+    // Solves the current game and updates the score
     private void Solve()
     {
         solved = true;
@@ -104,12 +111,15 @@
         }
     }
 
+    // This handles the image loading logic that shows / hides the images
     private void HandleImageLoad(Image image) 
     {
         loadedImages = loadedImages.Append(image).ToArray();
         if (loadedImages.Length == images.Length) {
             allImagesLoaded = true;
-            StateHasChanged();
         }
+        Console.WriteLine($"Loaded {loadedImages.Length} of {images.Length} {loadedImages.Length/9.0*100}");
+        // We place this here so that the loading text is updated
+        @* StateHasChanged(); *@
     }
 }

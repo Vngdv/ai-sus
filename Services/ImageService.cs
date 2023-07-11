@@ -1,6 +1,8 @@
-namespace ImageSus.Data;
+using ImageSus.Models;
 using Supabase;
 using static Postgrest.Constants;
+
+namespace ImageSus.Services;
 
 public class ImageService
 {
@@ -21,12 +23,12 @@ public class ImageService
 
     public async Task<Image[]> GetImageAsync(int count = 1, bool isSus = false)
     {
-        // Oke also das Problem ist, dass PostgREST keine functions calls erlaubt
-        // macht natürlich sinn, da es ein Angriffsvektor sein könnte.
-        // Deswegen müssen wir das hier anders lösen und fetchen im Schritt 1 alle IDs
-        // und dann im zweiten Sch^ritt die Bilder.
-        // Das ist natürlich nicht so performant, aber wir haben ja nur ca 7000 Bilder.
-        // Falls wir mal scalieren sollten muss hier auf ein RPC zu Supabase gewechselt werden.
+      // Okay, also das Problem ist, dass PostgREST keine Funktionsaufrufe erlaubt.
+      // Macht natürlich Sinn, da es ein Angriffsvektor sein könnte.
+      // Deswegen müssen wir das hier anders lösen und im Schritt 1 alle IDs abrufen.
+      // Und dann im zweiten Schritt die Bilder.
+      // Das ist natürlich nicht so performant, aber wir haben ja nur ca. 7000 Bilder.
+      // Falls wir mal skalieren sollten, müssen wir hier auf ein RPC zu Supabase wechseln
         await _client.InitializeAsync();
         var allIds = await _client.From<Image>()
           .Select("id")
